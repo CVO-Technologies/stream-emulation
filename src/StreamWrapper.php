@@ -31,6 +31,7 @@ class StreamWrapper implements ArrayAccess
     protected static $emulation;
 
     //region Stream wrapper methods
+
     // @codingStandardsIgnoreStart
 
     /**
@@ -74,6 +75,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     // @codingStandardsIgnoreEnd
+
     //endregion
 
     //region Getters and setters
