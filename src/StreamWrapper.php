@@ -79,6 +79,7 @@ class StreamWrapper implements ArrayAccess
     //endregion
 
     //region Getters and setters
+
     /**
      * Get the current stream context.
      *
@@ -144,6 +145,7 @@ class StreamWrapper implements ArrayAccess
 
         return $this;
     }
+
     //endregion
 
     /**
