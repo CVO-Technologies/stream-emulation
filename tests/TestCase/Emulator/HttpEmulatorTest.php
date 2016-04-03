@@ -62,6 +62,19 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $lines);
     }
 
+    public function testIncomingStreamWithMethod()
+    {
+        $stream = StreamWrapper::getResource(\GuzzleHttp\Psr7\stream_for('test123'));
+        stream_context_set_option($stream, 'http', 'method', 'POST');
+        $httpEmulator = new HttpEmulator('http://example.com', $stream);
+
+        $lines = explode("\r\n", $httpEmulator->getIncomingStream()->getContents());
+        $this->assertEquals('POST / HTTP/1.1', $lines[0]);
+        $this->assertEquals('Host: example.com', $lines[1]);
+        $this->assertEquals('', $lines[2]);
+        $this->assertCount(3, $lines);
+    }
+
     public function testOutgoingStream()
     {
         $stream = StreamWrapper::getResource(\GuzzleHttp\Psr7\stream_for(''));
@@ -91,9 +104,16 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
 
         $httpEmulator->setResponseStream(stream_for($response));
 
+        $this->assertTrue(isset($httpEmulator['headers']));
         $this->assertInternalType('array', $httpEmulator['headers']);
         $this->assertCount(2, $httpEmulator['headers']);
         $this->assertEquals('HTTP/1.1 200 OK', $httpEmulator['headers'][0]);
         $this->assertEquals('Content-Type: application/json', $httpEmulator['headers'][1]);
+
+        unset($httpEmulator['headers']);
+        $this->assertTrue(isset($httpEmulator['headers']));
+
+        $httpEmulator['headers'] = [];
+        $this->assertCount(2, $httpEmulator['headers']);
     }
 }

@@ -100,6 +100,32 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($emulator, $streamWrapper->getEmulator());
     }
 
+    public function testArrayAccess()
+    {
+        StreamWrapper::emulate(HttpEmulation::fromCallable(function (RequestInterface $request) use (&$invocations) {
+            $invocations[] = $request;
+
+            return new Response(200, [], 'test123');
+        }));
+
+        $context = fopen('https://example.com', 'r');
+
+        $httpEmulator = stream_get_meta_data($context)['wrapper_data'];
+
+        $this->assertTrue(isset($httpEmulator['headers']));
+        $this->assertInternalType('array', $httpEmulator['headers']);
+        $this->assertCount(1, $httpEmulator['headers']);
+        $this->assertEquals('HTTP/1.1 200 OK', $httpEmulator['headers'][0]);
+
+        unset($httpEmulator['headers']);
+        $this->assertTrue(isset($httpEmulator['headers']));
+
+        $httpEmulator['headers'] = [];
+        $this->assertCount(1, $httpEmulator['headers']);
+
+        fclose($context);
+    }
+
     protected function tearDown()
     {
         StreamWrapper::restoreWrapper('https');
