@@ -53,7 +53,6 @@ class StreamWrapper implements ArrayAccess
 
     public function stream_stat()
     {
-        return;
     }
 
     public function stream_read($length)
@@ -65,6 +64,7 @@ class StreamWrapper implements ArrayAccess
     {
         return $this->getResponse()->eof();
     }
+
     //endregion
 
     //region Getters and setters
@@ -101,6 +101,7 @@ class StreamWrapper implements ArrayAccess
 
         return $this;
     }
+
     //endregion
 
     public function callEmulation(StreamInterface $stream)
@@ -121,7 +122,7 @@ class StreamWrapper implements ArrayAccess
     public static function emulate($emulation)
     {
         if ((is_string($emulation)) && (class_exists($emulation))) {
-            $emulation = new $emulation;
+            $emulation = new $emulation();
         }
 
         static::$emulation = $emulation;
@@ -167,12 +168,12 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Whether a offset exists
+     * Whether a offset exists.
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset <p>
      * An offset to check for.
      * </p>
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
@@ -184,7 +185,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Offset to retrieve
+     * Offset to retrieve.
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      * @param mixed $offset <p>
      * The offset to retrieve.
@@ -198,7 +199,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Offset to set
+     * Offset to set.
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      * @param mixed $offset <p>
      * The offset to assign the value to.
@@ -215,7 +216,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Offset to unset
+     * Offset to unset.
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      * @param mixed $offset <p>
      * The offset to unset.

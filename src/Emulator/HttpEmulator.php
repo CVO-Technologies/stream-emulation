@@ -3,8 +3,8 @@
 namespace CvoTechnologies\StreamEmulation\Emulator;
 
 use function GuzzleHttp\Psr7\parse_response;
-use GuzzleHttp\Psr7\Request;
 use function GuzzleHttp\Psr7\stream_for;
+use GuzzleHttp\Psr7\Request;
 
 class HttpEmulator extends Emulator
 {
@@ -45,7 +45,7 @@ class HttpEmulator extends Emulator
         $content = $request->getMethod() . ' ' . $path . ' HTTP/' . $request->getProtocolVersion() . "\r\n";
         foreach ($request->getHeaders() as $header => $values) {
             foreach ($values as $value) {
-                $content .= $header .': ' . $value . "\r\n";
+                $content .= $header . ': ' . $value . "\r\n";
             }
         }
 
@@ -72,12 +72,12 @@ class HttpEmulator extends Emulator
     }
 
     /**
-     * Whether a offset exists
+     * Whether a offset exists.
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset <p>
      * An offset to check for.
      * </p>
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
@@ -89,7 +89,7 @@ class HttpEmulator extends Emulator
     }
 
     /**
-     * Offset to retrieve
+     * Offset to retrieve.
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      * @param mixed $offset <p>
      * The offset to retrieve.
@@ -103,7 +103,7 @@ class HttpEmulator extends Emulator
             $headers = [
                 'HTTP/' . $this->getResponse()->getProtocolVersion() . ' ' . $this->getResponse()->getStatusCode() . ' ' . $this->getResponse()->getReasonPhrase()
             ];
-            foreach  ($this->getResponse()->getHeaders() as $header => $values) {
+            foreach ($this->getResponse()->getHeaders() as $header => $values) {
                 foreach ($values as $value) {
                     $headers[] = $header . ': ' . $value;
                 }
@@ -114,7 +114,7 @@ class HttpEmulator extends Emulator
     }
 
     /**
-     * Offset to set
+     * Offset to set.
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      * @param mixed $offset <p>
      * The offset to assign the value to.
@@ -130,7 +130,7 @@ class HttpEmulator extends Emulator
     }
 
     /**
-     * Offset to unset
+     * Offset to unset.
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      * @param mixed $offset <p>
      * The offset to unset.

@@ -2,8 +2,6 @@
 
 namespace CvoTechnologies\StreamEmulation\Emulator;
 
-use function GuzzleHttp\Psr7\parse_response;
-use function GuzzleHttp\Psr7\stream_for;
 use Psr\Http\Message\StreamInterface;
 
 abstract class Emulator implements \ArrayAccess
@@ -40,7 +38,6 @@ abstract class Emulator implements \ArrayAccess
         return $this;
     }
 
-
     /**
      * @return mixed
      */
@@ -72,12 +69,12 @@ abstract class Emulator implements \ArrayAccess
     }
 
     /**
-     * Whether a offset exists
+     * Whether a offset exists.
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset <p>
      * An offset to check for.
      * </p>
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
@@ -86,7 +83,7 @@ abstract class Emulator implements \ArrayAccess
     abstract public function offsetExists($offset);
 
     /**
-     * Offset to retrieve
+     * Offset to retrieve.
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      * @param mixed $offset <p>
      * The offset to retrieve.
@@ -97,7 +94,7 @@ abstract class Emulator implements \ArrayAccess
     abstract public function offsetGet($offset);
 
     /**
-     * Offset to set
+     * Offset to set.
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      * @param mixed $offset <p>
      * The offset to assign the value to.
@@ -111,7 +108,7 @@ abstract class Emulator implements \ArrayAccess
     abstract public function offsetSet($offset, $value);
 
     /**
-     * Offset to unset
+     * Offset to unset.
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      * @param mixed $offset <p>
      * The offset to unset.
