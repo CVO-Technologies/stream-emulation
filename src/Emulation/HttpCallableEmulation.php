@@ -19,7 +19,6 @@ class HttpCallableEmulation extends HttpEmulation
         $this->callable = $callable;
     }
 
-
     /**
      * {@inheritDoc}
      */

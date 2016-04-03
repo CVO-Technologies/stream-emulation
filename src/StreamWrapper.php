@@ -32,6 +32,7 @@ class StreamWrapper implements ArrayAccess
 
     //region Stream wrapper methods
     // @codingStandardsIgnoreStart
+
     /**
      * Open a stream.
      *
@@ -60,7 +61,6 @@ class StreamWrapper implements ArrayAccess
 
     public function stream_stat()
     {
-        return;
     }
 
     public function stream_read($length)
@@ -72,6 +72,7 @@ class StreamWrapper implements ArrayAccess
     {
         return $this->getResponse()->eof();
     }
+
     // @codingStandardsIgnoreEnd
     //endregion
 
@@ -130,7 +131,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Set the response for this stream
+     * Set the response for this stream.
      *
      * @param StreamInterface $stream The response as stream.
      * @return $this
@@ -144,7 +145,7 @@ class StreamWrapper implements ArrayAccess
     //endregion
 
     /**
-     * Calls the emulation
+     * Calls the emulation.
      *
      * @param StreamInterface $stream The request stream.
      * @return StreamInterface The response stream.
@@ -181,7 +182,7 @@ class StreamWrapper implements ArrayAccess
     public static function emulate($emulation)
     {
         if ((is_string($emulation)) && (class_exists($emulation))) {
-            $emulation = new $emulation;
+            $emulation = new $emulation();
         }
 
         static::$emulation = $emulation;
@@ -260,7 +261,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Whether a offset exists
+     * Whether a offset exists.
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset <p>
      * An offset to check for.
@@ -277,7 +278,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Offset to retrieve
+     * Offset to retrieve.
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      * @param mixed $offset <p>
      * The offset to retrieve.
@@ -291,7 +292,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Offset to set
+     * Offset to set.
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      * @param mixed $offset <p>
      * The offset to assign the value to.
@@ -308,7 +309,7 @@ class StreamWrapper implements ArrayAccess
     }
 
     /**
-     * Offset to unset
+     * Offset to unset.
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      * @param mixed $offset <p>
      * The offset to unset.

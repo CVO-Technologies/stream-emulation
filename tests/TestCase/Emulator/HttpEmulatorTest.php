@@ -80,7 +80,7 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
 
         $response = 'HTTP/1.1 200 OK' . "\r\n";
         $response .= "\r\n";
-        $response .= "test123";
+        $response .= 'test123';
 
         $httpEmulator->setResponseStream(\GuzzleHttp\Psr7\stream_for($response));
 
@@ -98,7 +98,7 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
         $response = 'HTTP/1.1 200 OK' . "\r\n";
         $response .= 'Content-Type: application/json' . "\r\n";
         $response .= "\r\n";
-        $response .= "test123";
+        $response .= 'test123';
 
         $httpEmulator->setResponseStream(\GuzzleHttp\Psr7\stream_for($response));
 
