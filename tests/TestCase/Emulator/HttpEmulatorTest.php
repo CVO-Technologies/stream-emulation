@@ -3,8 +3,6 @@
 namespace CvoTechnologies\StreamEmulation\Test\TestCase\Emulator;
 
 use CvoTechnologies\StreamEmulation\Emulator\HttpEmulator;
-use GuzzleHttp\Psr7\Response;
-use function GuzzleHttp\Psr7\stream_for;
 use GuzzleHttp\Psr7\StreamWrapper;
 
 class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
@@ -84,7 +82,7 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
         $response .= "\r\n";
         $response .= "test123";
 
-        $httpEmulator->setResponseStream(stream_for($response));
+        $httpEmulator->setResponseStream(\GuzzleHttp\Psr7\stream_for($response));
 
         $response = $httpEmulator->getResponse();
         $this->assertInstanceOf('Psr\Http\Message\ResponseInterface', $response);
@@ -102,7 +100,7 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
         $response .= "\r\n";
         $response .= "test123";
 
-        $httpEmulator->setResponseStream(stream_for($response));
+        $httpEmulator->setResponseStream(\GuzzleHttp\Psr7\stream_for($response));
 
         $this->assertTrue(isset($httpEmulator['headers']));
         $this->assertInternalType('array', $httpEmulator['headers']);

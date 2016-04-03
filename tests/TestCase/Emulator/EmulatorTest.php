@@ -3,7 +3,6 @@
 namespace CvoTechnologies\StreamEmulation\Test\TestCase\Emulator;
 
 use CvoTechnologies\StreamEmulation\Emulator\Emulator;
-use function GuzzleHttp\Psr7\stream_for;
 use GuzzleHttp\Psr7\StreamWrapper;
 
 class TestEmulator extends Emulator

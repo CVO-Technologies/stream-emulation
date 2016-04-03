@@ -2,7 +2,6 @@
 
 namespace CvoTechnologies\StreamEmulation\Emulation;
 
-use function GuzzleHttp\Psr7\parse_request;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -13,7 +12,7 @@ abstract class HttpEmulation extends Emulation
 
     public function __invoke(StreamInterface $stream)
     {
-        $response = $this->_run(parse_request($stream->getContents()));
+        $response = $this->_run(\GuzzleHttp\Psr7\parse_request($stream->getContents()));
 
         $content = 'HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase() . "\r\n";
         foreach ($response->getHeaders() as $header => $values) {

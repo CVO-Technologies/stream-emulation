@@ -2,9 +2,7 @@
 
 namespace CvoTechnologies\StreamEmulation\Emulator;
 
-use function GuzzleHttp\Psr7\parse_response;
 use GuzzleHttp\Psr7\Request;
-use function GuzzleHttp\Psr7\stream_for;
 
 class HttpEmulator extends Emulator
 {
@@ -54,7 +52,7 @@ class HttpEmulator extends Emulator
             $content .= $request->getBody()->getContents();
         }
 
-        return stream_for($content);
+        return \GuzzleHttp\Psr7\stream_for($content);
     }
 
     public function getOutgoingStream()
@@ -68,7 +66,7 @@ class HttpEmulator extends Emulator
             return $this->response;
         }
 
-        return $this->response = parse_response($this->getResponseStream());
+        return $this->response = \GuzzleHttp\Psr7\parse_response($this->getResponseStream());
     }
 
     /**

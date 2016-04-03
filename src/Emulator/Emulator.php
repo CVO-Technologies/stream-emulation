@@ -2,8 +2,6 @@
 
 namespace CvoTechnologies\StreamEmulation\Emulator;
 
-use function GuzzleHttp\Psr7\parse_response;
-use function GuzzleHttp\Psr7\stream_for;
 use Psr\Http\Message\StreamInterface;
 
 abstract class Emulator implements \ArrayAccess

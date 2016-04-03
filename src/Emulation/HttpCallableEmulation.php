@@ -2,9 +2,7 @@
 
 namespace CvoTechnologies\StreamEmulation\Emulation;
 
-use function GuzzleHttp\Psr7\parse_request;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\StreamInterface;
 
 class HttpCallableEmulation extends HttpEmulation
 {
