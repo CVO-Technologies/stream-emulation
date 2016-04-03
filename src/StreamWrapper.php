@@ -97,7 +97,9 @@ class StreamWrapper implements ArrayAccess
 
     public function setResponse(StreamInterface $stream)
     {
-        return $this->response = $stream;
+        $this->response = $stream;
+
+        return $this;
     }
     //endregion
 
@@ -127,6 +129,10 @@ class StreamWrapper implements ArrayAccess
 
     public static function registerEmulator($scheme, $class)
     {
+        if (!class_exists($class)) {
+            throw new \InvalidArgumentException('Class \'' . $class . '\' does not exist');
+        }
+
         static::$emulators[$scheme] = $class;
     }
 
