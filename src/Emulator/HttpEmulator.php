@@ -8,6 +8,9 @@ class HttpEmulator extends Emulator
 {
     protected $response;
 
+    /**
+     * {@inheritDoc}
+     */
     public function getIncomingStream()
     {
         $options = stream_context_get_options($this->context);
@@ -43,7 +46,7 @@ class HttpEmulator extends Emulator
         $content = $request->getMethod() . ' ' . $path . ' HTTP/' . $request->getProtocolVersion() . "\r\n";
         foreach ($request->getHeaders() as $header => $values) {
             foreach ($values as $value) {
-                $content .= $header .': ' . $value . "\r\n";
+                $content .= $header . ': ' . $value . "\r\n";
             }
         }
 
@@ -55,11 +58,19 @@ class HttpEmulator extends Emulator
         return \GuzzleHttp\Psr7\stream_for($content);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getOutgoingStream()
     {
         return $this->getResponse()->getBody();
     }
 
+    /**
+     * Get the HTTP response object.
+     *
+     * @return \Psr\Http\Message\ResponseInterface The response as object.
+     */
     public function getResponse()
     {
         if ($this->response) {
@@ -75,7 +86,7 @@ class HttpEmulator extends Emulator
      * @param mixed $offset <p>
      * An offset to check for.
      * </p>
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.
@@ -101,7 +112,7 @@ class HttpEmulator extends Emulator
             $headers = [
                 'HTTP/' . $this->getResponse()->getProtocolVersion() . ' ' . $this->getResponse()->getStatusCode() . ' ' . $this->getResponse()->getReasonPhrase()
             ];
-            foreach  ($this->getResponse()->getHeaders() as $header => $values) {
+            foreach ($this->getResponse()->getHeaders() as $header => $values) {
                 foreach ($values as $value) {
                     $headers[] = $header . ': ' . $value;
                 }

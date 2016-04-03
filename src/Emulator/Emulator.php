@@ -10,18 +10,36 @@ abstract class Emulator implements \ArrayAccess
     protected $context;
     protected $responseStream;
 
+    /**
+     * Construct an emulator.
+     *
+     * @param string $path The path to the stream.
+     * @param resource $context The current stream resource.
+     */
     public function __construct($path, $context)
     {
         $this->setPath($path);
         $this->setContext($context);
     }
 
+    /**
+     * Return a stream with the incoming data.
+     *
+     * @return \Psr\Http\Message\StreamInterface
+     */
     abstract public function getIncomingStream();
 
+    /**
+     * Return a stream with the outgoing data.
+     *
+     * @return \Psr\Http\Message\StreamInterface
+     */
     abstract public function getOutgoingStream();
 
     /**
-     * @return mixed
+     * Get the stream path.
+     *
+     * @return string The stream path.
      */
     public function getPath()
     {
@@ -29,7 +47,10 @@ abstract class Emulator implements \ArrayAccess
     }
 
     /**
-     * @param mixed $path
+     * Set the stream path.
+     *
+     * @param string $path The path to the stream
+     * @return $this
      */
     public function setPath($path)
     {
@@ -40,7 +61,9 @@ abstract class Emulator implements \ArrayAccess
 
 
     /**
-     * @return mixed
+     * Get the current stream context.
+     *
+     * @return resource The current stream context.
      */
     public function getContext()
     {
@@ -48,7 +71,10 @@ abstract class Emulator implements \ArrayAccess
     }
 
     /**
-     * @param mixed $context
+     * Set the current stream context.
+     *
+     * @param resource $context The stream context to set.
+     * @return $this
      */
     public function setContext($context)
     {
@@ -57,6 +83,12 @@ abstract class Emulator implements \ArrayAccess
         return $this;
     }
 
+    /**
+     * Set the response stream.
+     *
+     * @param \Psr\Http\Message\StreamInterface $response The response stream.
+     * @return $this
+     */
     public function setResponseStream(StreamInterface $response)
     {
         $this->responseStream = $response;
@@ -64,6 +96,11 @@ abstract class Emulator implements \ArrayAccess
         return $this;
     }
 
+    /**
+     * Get the response stream.
+     *
+     * @return \Psr\Http\Message\StreamInterface The response stream.
+     */
     public function getResponseStream()
     {
         return $this->responseStream;
@@ -75,7 +112,7 @@ abstract class Emulator implements \ArrayAccess
      * @param mixed $offset <p>
      * An offset to check for.
      * </p>
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.

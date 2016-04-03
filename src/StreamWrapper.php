@@ -31,6 +31,13 @@ class StreamWrapper implements ArrayAccess
     protected static $emulation;
 
     //region Stream wrapper methods
+    // @codingStandardsIgnoreStart
+    /**
+     * Open a stream.
+     *
+     * @param string $path The path for the stream.
+     * @return bool Whether the stream could be opened.
+     */
     public function stream_open($path)
     {
         $scheme = parse_url($path, PHP_URL_SCHEME);
@@ -65,19 +72,36 @@ class StreamWrapper implements ArrayAccess
     {
         return $this->getResponse()->eof();
     }
+    // @codingStandardsIgnoreEnd
     //endregion
 
     //region Getters and setters
+    /**
+     * Get the current stream context.
+     *
+     * @return resource The stream context.
+     */
     public function getContext()
     {
         return $this->context;
     }
 
+    /**
+     * Get the emulator.
+     *
+     * @return Emulator The current emulator.
+     */
     public function getEmulator()
     {
         return $this->emulator;
     }
 
+    /**
+     * Set the emulator to use.
+     *
+     * @param Emulator $emulator The emulator to use.
+     * @return $this
+     */
     public function setEmulator(Emulator $emulator)
     {
         $this->emulator = $emulator;
@@ -85,16 +109,32 @@ class StreamWrapper implements ArrayAccess
         return $this;
     }
 
+    /**
+     * Get the emulation to run.
+     *
+     * @return callable
+     */
     public function getEmulation()
     {
         return static::$emulation;
     }
 
+    /**
+     * Get the response.
+     *
+     * @return StreamInterface The response as stream.
+     */
     public function getResponse()
     {
         return $this->response;
     }
 
+    /**
+     * Set the response for this stream
+     *
+     * @param StreamInterface $stream The response as stream.
+     * @return $this
+     */
     public function setResponse(StreamInterface $stream)
     {
         $this->response = $stream;
@@ -103,21 +143,41 @@ class StreamWrapper implements ArrayAccess
     }
     //endregion
 
+    /**
+     * Calls the emulation
+     *
+     * @param StreamInterface $stream The request stream.
+     * @return StreamInterface The response stream.
+     */
     public function callEmulation(StreamInterface $stream)
     {
         return call_user_func($this->getEmulation(), $stream);
     }
 
+    /**
+     * Get an emulator instance.
+     *
+     * @param string $scheme The scheme to get an emulator for.
+     * @param string $path The path of the stream.
+     * @param resource $context The stream resource.
+     * @return \CvoTechnologies\StreamEmulation\Emulator\Emulator The emulator instance.
+     */
     public static function getEmulatorInstance($scheme, $path, $context)
     {
         if (!isset(static::$emulators[$scheme])) {
             throw new \InvalidArgumentException('No emulator found for scheme \'' . $scheme . '\'');
         }
-        $streamImplementationClass = static::$emulators[$scheme];
+        $emulator = static::$emulators[$scheme];
 
-        return new $streamImplementationClass($path, $context);
+        return new $emulator($path, $context);
     }
 
+    /**
+     * Set the emulation to use.
+     *
+     * @param string|callable|object $emulation The emulation to use.
+     * @return void
+     */
     public static function emulate($emulation)
     {
         if ((is_string($emulation)) && (class_exists($emulation))) {
@@ -127,6 +187,13 @@ class StreamWrapper implements ArrayAccess
         static::$emulation = $emulation;
     }
 
+    /**
+     * Registers an emulator class.
+     *
+     * @param string $scheme The method this emulator has to be registered to.
+     * @param string $class The class name of the emulator.
+     * @return void
+     */
     public static function registerEmulator($scheme, $class)
     {
         if (!class_exists($class)) {
@@ -136,6 +203,13 @@ class StreamWrapper implements ArrayAccess
         static::$emulators[$scheme] = $class;
     }
 
+    /**
+     * Register a wrapper for the specified protocol.
+     *
+     * @param string $protocol The protocol to register a wrapper for.
+     * @param bool $emulation Whether to suffix it with emulation.
+     * @return void
+     */
     public static function registerWrapper($protocol, $emulation = true)
     {
         if ($emulation) {
@@ -145,6 +219,13 @@ class StreamWrapper implements ArrayAccess
         stream_wrapper_register($protocol, 'CvoTechnologies\StreamEmulation\StreamWrapper');
     }
 
+    /**
+     * Unregister a wrapper for the specified protocol.
+     *
+     * @param string $protocol The protocol to unregister a wrapper for.
+     * @param bool $emulation Whether to suffix it with emulation.
+     * @return void
+     */
     public static function unregisterWrapper($protocol, $emulation = true)
     {
         if ($emulation) {
@@ -154,6 +235,12 @@ class StreamWrapper implements ArrayAccess
         stream_wrapper_unregister($protocol);
     }
 
+    /**
+     * Override a internal stream wrapper.
+     *
+     * @param string $protocol The protocol to override.
+     * @return void
+     */
     public static function overrideWrapper($protocol)
     {
         stream_wrapper_unregister($protocol);
@@ -161,6 +248,12 @@ class StreamWrapper implements ArrayAccess
         static::registerWrapper($protocol, false);
     }
 
+    /**
+     * Restore an internal stream wrapper.
+     *
+     * @param string $protocol The protocol of the stream wrapper to restore.
+     * @return void
+     */
     public static function restoreWrapper($protocol)
     {
         stream_wrapper_restore($protocol);
@@ -172,7 +265,7 @@ class StreamWrapper implements ArrayAccess
      * @param mixed $offset <p>
      * An offset to check for.
      * </p>
-     * @return boolean true on success or false on failure.
+     * @return bool true on success or false on failure.
      * </p>
      * <p>
      * The return value will be casted to boolean if non-boolean was returned.

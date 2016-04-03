@@ -9,8 +9,10 @@ class HttpCallableEmulation extends HttpEmulation
     protected $callable;
 
     /**
-     * HttpCallableEmulation constructor.
-     * @param callable $callable
+     * Construct the callable based HTTP emulation.
+     *
+     * @param callable $callable The callable to use.
+     * @internal
      */
     public function __construct(callable $callable)
     {
