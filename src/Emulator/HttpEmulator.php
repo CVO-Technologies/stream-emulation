@@ -38,24 +38,7 @@ class HttpEmulator extends Emulator
         }
 
         $request = new Request($method, $this->path, $headers, $body, $protocolVersion);
-
-        $path = $request->getUri()->getPath();
-        if (!$path) {
-            $path = '/';
-        }
-        $content = $request->getMethod() . ' ' . $path . ' HTTP/' . $request->getProtocolVersion() . "\r\n";
-        foreach ($request->getHeaders() as $header => $values) {
-            foreach ($values as $value) {
-                $content .= $header . ': ' . $value . "\r\n";
-            }
-        }
-
-        if ($request->getBody()->getSize()) {
-            $content .= "\r\n";
-            $content .= $request->getBody()->getContents();
-        }
-
-        return \GuzzleHttp\Psr7\stream_for($content);
+        return \GuzzleHttp\Psr7\stream_for(\GuzzleHttp\Psr7\str($request));
     }
 
     /**

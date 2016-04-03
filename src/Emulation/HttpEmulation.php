@@ -17,16 +17,7 @@ abstract class HttpEmulation extends Emulation
     {
         $response = $this->_run(\GuzzleHttp\Psr7\parse_request($stream->getContents()));
 
-        $content = 'HTTP/' . $response->getProtocolVersion() . ' ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase() . "\r\n";
-        foreach ($response->getHeaders() as $header => $values) {
-            foreach ($values as $value) {
-                $content .= $header . ': ' . $value . "\r\n";
-            }
-        }
-        $content .= "\r\n";
-        $content .= $response->getBody()->getContents();
-
-        return \GuzzleHttp\Psr7\stream_for($content);
+        return \GuzzleHttp\Psr7\stream_for(\GuzzleHttp\Psr7\str($response));
     }
 
     /**

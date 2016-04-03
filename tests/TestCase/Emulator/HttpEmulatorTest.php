@@ -16,7 +16,7 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('GET / HTTP/1.1', $lines[0]);
         $this->assertEquals('Host: example.com', $lines[1]);
         $this->assertEquals('', $lines[2]);
-        $this->assertCount(3, $lines);
+        $this->assertCount(4, $lines);
     }
 
     public function testIncomingStreamWithContent()
@@ -44,7 +44,7 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Host: example.com', $lines[1]);
         $this->assertEquals('X-Test-Header: testvalue', $lines[2]);
         $this->assertEquals('', $lines[3]);
-        $this->assertCount(4, $lines);
+        $this->assertCount(5, $lines);
     }
 
     public function testIncomingStreamWithProtocolVersion()
@@ -57,7 +57,7 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('GET / HTTP/1.0', $lines[0]);
         $this->assertEquals('Host: example.com', $lines[1]);
         $this->assertEquals('', $lines[2]);
-        $this->assertCount(3, $lines);
+        $this->assertCount(4, $lines);
     }
 
     public function testIncomingStreamWithMethod()
@@ -70,7 +70,7 @@ class HttpEmulatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('POST / HTTP/1.1', $lines[0]);
         $this->assertEquals('Host: example.com', $lines[1]);
         $this->assertEquals('', $lines[2]);
-        $this->assertCount(3, $lines);
+        $this->assertCount(4, $lines);
     }
 
     public function testOutgoingStream()
