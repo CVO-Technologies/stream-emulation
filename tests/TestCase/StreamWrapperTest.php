@@ -31,6 +31,23 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('/', $invocations[0]->getUri()->getPath());
     }
 
+    public function testHttpEmulationEmulate()
+    {
+        StreamWrapper::registerWrapper('http');
+        $invocations = [];
+        StreamWrapper::emulate(HttpEmulation::fromCallable(function (RequestInterface $request) use (&$invocations) {
+            $invocations[] = $request;
+
+            return new Response(200, [], 'test123');
+        }));
+
+        $this->assertEquals('test123', file_get_contents('http-emulation://example.com'));
+        $this->assertCount(1, $invocations);
+        $this->assertEquals('/', $invocations[0]->getUri()->getPath());
+
+        StreamWrapper::unregisterWrapper('http');
+    }
+
     public function testHttpsEmulate()
     {
         $invocations = [];
@@ -123,6 +140,18 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $httpEmulator['headers'] = [];
         $this->assertCount(1, $httpEmulator['headers']);
 
+        fclose($context);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage No emulator found for scheme 'test'
+     */
+    public function testNonDefinedScheme()
+    {
+        StreamWrapper::registerWrapper('test', false);
+
+        $context = fopen('test://example.com', 'r');
         fclose($context);
     }
 

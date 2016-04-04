@@ -181,12 +181,13 @@ class StreamWrapper implements ArrayAccess
      * Set the emulation to use.
      *
      * @param string|callable|object $emulation The emulation to use.
+     * @param callable|null $assertionCallable The assertion call to use.
      * @return void
      */
-    public static function emulate($emulation)
+    public static function emulate($emulation, callable $assertionCallable = null)
     {
         if ((is_string($emulation)) && (class_exists($emulation))) {
-            $emulation = new $emulation();
+            $emulation = new $emulation($assertionCallable);
         }
 
         static::$emulation = $emulation;
