@@ -67,4 +67,22 @@ class HttpEmulationTest extends \PHPUnit_Framework_TestCase
         $request = 'GET / HTTP/1.1' . "\r\n";
         $testHttpEmulation(\GuzzleHttp\Psr7\stream_for($request))->getContents();
     }
+
+    public function testStaticCreation()
+    {
+        $callableCalled = $assertionCallbackCalled = false;
+        $httpEmulation = HttpEmulation::fromCallable(function () use (&$callableCalled) {
+            $callableCalled = true;
+
+            return new Response();
+        }, function () use (&$assertionCallbackCalled) {
+            $assertionCallbackCalled = true;
+        });
+
+        $request = 'GET / HTTP/1.1' . "\r\n";
+        $httpEmulation(\GuzzleHttp\Psr7\stream_for($request));
+
+        $this->assertTrue($callableCalled);
+        $this->assertTrue($assertionCallbackCalled);
+    }
 }
