@@ -155,6 +155,20 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         fclose($context);
     }
 
+    public function testRegisterEmulator()
+    {
+        StreamWrapper::registerEmulator('test', 'CvoTechnologies\StreamEmulation\Test\Emulator\TestEmulator');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Class 'NonExistingEmulator' does not exist
+     */
+    public function testNonExistingEmulator()
+    {
+        StreamWrapper::registerEmulator('test', 'NonExistingEmulator');
+    }
+
     protected function tearDown()
     {
         StreamWrapper::restoreWrapper('https');
