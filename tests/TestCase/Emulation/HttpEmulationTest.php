@@ -50,4 +50,21 @@ class HttpEmulationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('test123', $lines[3]);
         $this->assertCount(4, $lines);
     }
+
+    public function testAssertionCallback()
+    {
+        $testHttpEmulation = new TestHttpEmulation();
+
+        $assertionCallbackCalled = false;
+        $assertionCallback = function (RequestInterface $request) use (&$assertionCallbackCalled) {
+            $assertionCallbackCalled = true;
+
+            $this->assertInstanceOf('Psr\Http\Message\RequestInterface', $request);
+        };
+        $this->assertSame($testHttpEmulation, $testHttpEmulation->setAssertionCallback($assertionCallback));
+        $this->assertSame($assertionCallback, $testHttpEmulation->getAssertionCallback());
+
+        $request = 'GET / HTTP/1.1' . "\r\n";
+        $testHttpEmulation(\GuzzleHttp\Psr7\stream_for($request))->getContents();
+    }
 }
