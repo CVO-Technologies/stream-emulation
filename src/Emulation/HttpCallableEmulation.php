@@ -12,10 +12,13 @@ class HttpCallableEmulation extends HttpEmulation
      * Construct the callable based HTTP emulation.
      *
      * @param callable $callable The callable to use.
+     * @param callable|null $assertedCallback The callback used to check for assertions.
      * @internal
      */
-    public function __construct(callable $callable)
+    public function __construct(callable $callable, callable $assertedCallback = null)
     {
+        parent::__construct($assertedCallback);
+
         $this->callable = $callable;
     }
 
