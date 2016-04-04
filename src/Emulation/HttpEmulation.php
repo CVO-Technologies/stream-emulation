@@ -11,6 +11,11 @@ abstract class HttpEmulation extends Emulation
     protected $_content = '';
     protected $assertionCallback;
 
+    /**
+     * HttpEmulation constructor.
+     *
+     * @param callable|null $assertionCallback The assertion callback to use.
+     */
     public function __construct(callable $assertionCallback = null)
     {
         if ($assertionCallback) {
