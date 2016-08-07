@@ -38,6 +38,7 @@ class HttpEmulator extends Emulator
         }
 
         $request = new Request($method, $this->path, $headers, $body, $protocolVersion);
+
         return \GuzzleHttp\Psr7\stream_for(\GuzzleHttp\Psr7\str($request));
     }
 
