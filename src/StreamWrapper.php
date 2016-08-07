@@ -74,6 +74,11 @@ class StreamWrapper implements ArrayAccess
         return $this->getResponse()->eof();
     }
 
+    public function stream_set_option($option, $arg1, $arg2)
+    {
+        return true;
+    }
+
     // @codingStandardsIgnoreEnd
 
     //endregion
