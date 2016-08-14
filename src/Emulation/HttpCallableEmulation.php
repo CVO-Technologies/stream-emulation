@@ -25,7 +25,7 @@ class HttpCallableEmulation extends HttpEmulation
     /**
      * {@inheritDoc}
      */
-    protected function _run(RequestInterface $request)
+    protected function run(RequestInterface $request)
     {
         return call_user_func($this->callable, $request);
     }

@@ -12,7 +12,7 @@ class TestHttpEmulation extends HttpEmulation
      * @param \Psr\Http\Message\RequestInterface $request
      * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function _run(RequestInterface $request)
+    protected function run(RequestInterface $request)
     {
         return new Response(200, [
             'Content-Type' => 'application/json'
