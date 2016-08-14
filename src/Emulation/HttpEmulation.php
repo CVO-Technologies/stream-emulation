@@ -29,7 +29,7 @@ abstract class HttpEmulation extends Emulation
     public function __invoke(StreamInterface $stream)
     {
         $request = \GuzzleHttp\Psr7\parse_request($stream->getContents());
-        $response = $this->_run($request);
+        $response = $this->run($request);
 
         if ($this->getAssertionCallback()) {
             call_user_func($this->getAssertionCallback(), $request);
@@ -44,7 +44,7 @@ abstract class HttpEmulation extends Emulation
      * @param \Psr\Http\Message\RequestInterface $request The request object/
      * @return \Psr\Http\Message\ResponseInterface The response object.
      */
-    abstract protected function _run(RequestInterface $request);
+    abstract protected function run(RequestInterface $request);
 
     /**
      * Set the callback used to check for assertions.
