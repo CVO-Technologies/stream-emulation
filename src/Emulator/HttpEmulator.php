@@ -23,6 +23,10 @@ class HttpEmulator extends Emulator
         if (isset($options['http']['header'])) {
             $headerLines = explode("\r\n", $options['http']['header']);
             foreach ($headerLines as $headerLine) {
+                if (!$headerLine) {
+                    continue;
+                }
+
                 list($header, $value) = explode(': ', $headerLine, 2);
 
                 $headers[$header][] = $value;
