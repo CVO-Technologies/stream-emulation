@@ -34,6 +34,15 @@ class StreamWrapper implements ArrayAccess
 
     // @codingStandardsIgnoreStart
 
+    public function url_stat(string $path, int $flags)
+    {
+        $contents = file_get_contents($path);
+
+        return [
+            'size' => strlen($contents),
+        ];
+    }
+
     /**
      * Open a stream.
      *
