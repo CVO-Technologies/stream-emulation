@@ -5,8 +5,10 @@ namespace CvoTechnologies\StreamEmulation\Emulation;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 
-abstract class HttpEmulation extends Emulation
+abstract class HttpEmulation extends Emulation implements MessageAwareEmulationInterface
 {
+    use MessageAwareEmulationTrait;
+
     protected $_headers = [];
     protected $_content = '';
     protected $assertionCallback;
